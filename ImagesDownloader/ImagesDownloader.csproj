@@ -249,6 +249,7 @@
     <Compile Include="Models\ImageInfoResult.cs" />
     <Compile Include="Models\JobInfoResult.cs" />
     <Compile Include="Models\JobStatus.cs" />
+    <Compile Include="Models\UrlInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\JobInfoService.cs" />
     <Compile Include="Services\ImagesService.cs" />
@@ -270,6 +271,7 @@
       <DependentUpon>Jobs.edmx</DependentUpon>
       <LastGenOutput>Jobs.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\App\imagesDownloader.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />

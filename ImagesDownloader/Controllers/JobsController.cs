@@ -1,11 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Web.Http;
 using Hangfire;
+using ImagesDownloader.Models;
 using ImagesDownloader.Services;
+using Newtonsoft.Json;
 
 namespace ImagesDownloader.Controllers
 {
@@ -31,8 +34,9 @@ namespace ImagesDownloader.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, jobInfo, JsonMediaTypeFormatter.DefaultMediaType);
             }
             // TODO: Catch not found exception
-            catch (Exception)
+            catch (Exception ex)
             {
+                Trace.WriteLine(ex.Message);
                 return Request.CreateResponse(HttpStatusCode.NotFound, "Job with current identifier was not found", JsonMediaTypeFormatter.DefaultMediaType);
             }
         }
@@ -40,26 +44,28 @@ namespace ImagesDownloader.Controllers
         /// <summary>
         /// Run job for downloading images (POST api/jobs)
         /// </summary>
-        /// <param name="url">Page URL</param>
+        /// <param name="value">Page URL</param>
         /// <returns>Job Id</returns>
-        public HttpResponseMessage Post([FromBody] string url)
+        public HttpResponseMessage Post([FromBody] dynamic value)
         {
-            Uri urlResult;
-            var isUrl = Uri.TryCreate(url, UriKind.Absolute, out urlResult) && urlResult.Scheme == Uri.UriSchemeHttp;
-
             try
             {
-                if (isUrl)
+                UrlInfo urlInfo = JsonConvert.DeserializeObject<UrlInfo>(value.ToString());
+                Uri urlResult;
+                var isValidUrl = Uri.TryCreate(urlInfo.Value, UriKind.Absolute, out urlResult) && urlResult.Scheme == Uri.UriSchemeHttp;
+
+                if (isValidUrl)
                 {
-                    var jobId = BackgroundJob.Enqueue(() => _imagesService.GetImagesByUrl(url));
+                    var jobId = BackgroundJob.Enqueue(() => _imagesService.GetImagesByUrl(urlInfo.Value));
 
                     return Request.CreateResponse(HttpStatusCode.OK, jobId, JsonMediaTypeFormatter.DefaultMediaType);
                 }
 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, "Not correct request", JsonMediaTypeFormatter.DefaultMediaType);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Trace.WriteLine(ex.Message);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, "Ooops, something went wrong", JsonMediaTypeFormatter.DefaultMediaType);
             }
         }
