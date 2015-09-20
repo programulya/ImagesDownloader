@@ -8,6 +8,7 @@ using HtmlAgilityPack;
 using ImagesDownloader.Contracts;
 using static System.String;
 using System.Diagnostics;
+using System.Drawing;
 
 namespace ImagesDownloader.Services
 {
@@ -52,26 +53,27 @@ namespace ImagesDownloader.Services
                                     var fileName = Guid.NewGuid() + Path.GetExtension(src);
                                     var outputFile = Path.Combine(tempDirectory, fileName);
 
-                                    client.OpenRead(src);
-                                    var size = Convert.ToInt64(client.ResponseHeaders["Content-Length"]);
                                     client.DownloadFile(src, outputFile);
 
                                     // TODO: Move to database layer
+                                    var size = new FileInfo(outputFile).Length;
+                                    var image = Image.FromFile(outputFile);
+
                                     using (var context = new JobsEntities())
                                     {
                                         // TODO Add information
                                         var imageInfo = new ImageInfo
                                         {
                                             ContentType = MimeMapping.GetMimeMapping(fileName),
-                                            LocalUrl = "http://localhost/ImagesDownloader/Images/" + randomFileName + "/" + fileName,
+                                            LocalUrl =
+                                                "http://localhost/ImagesDownloader/Images/" + randomFileName + "/" +
+                                                fileName,
                                             RemoteUrl = src,
                                             JobId = Convert.ToInt32(JobContext.JobId),
-                                            Size = size
+                                            Size = size,
+                                            Height = image.Height,
+                                            Width = image.Height
                                         };
-
-                                        //imageInfo.Size = 0;
-                                        //imageInfo.Width = 0;
-                                        //imageInfo.Height = 0;
 
                                         context.ImageInfoes.Add(imageInfo);
                                         context.SaveChanges();

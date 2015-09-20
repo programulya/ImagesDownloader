@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 namespace ImagesDownloader.Controllers
 {
     /// <summary>
-    /// API for creating jobs that downloads images
+    /// API for creating jobs that download images.
     /// </summary>
     public class JobsController : ApiController
     {
@@ -21,10 +21,10 @@ namespace ImagesDownloader.Controllers
         private readonly JobInfoService _jobInfoService = new JobInfoService();
 
         /// <summary>
-        /// Get job by id (GET api/jobs/5)
+        /// Get job by id.
         /// </summary>
-        /// <param name="id">Job Id</param>
-        /// <returns>Job information</returns>
+        /// <param name="id">Job id.</param>
+        /// <returns>Returns job information (status and result) in HttpResponseMessage.</returns>
         public HttpResponseMessage GetById([FromUri] int id)
         {
             try
@@ -42,10 +42,10 @@ namespace ImagesDownloader.Controllers
         }
 
         /// <summary>
-        /// Run job for downloading images (POST api/jobs)
+        /// Run job for downloading images.
         /// </summary>
-        /// <param name="value">Page URL</param>
-        /// <returns>Job Id</returns>
+        /// <param name="value">Page URL.</param>
+        /// <returns>Returns job id in HttpResponseMessage.</returns>
         public HttpResponseMessage Post([FromBody] dynamic value)
         {
             try
