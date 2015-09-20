@@ -12,8 +12,15 @@ using System.Drawing;
 
 namespace ImagesDownloader.Services
 {
+    /// <summary>
+    /// Download images service
+    /// </summary>
     public class ImagesService : IImagesService
     {
+        /// <summary>
+        /// Get images by URL
+        /// </summary>
+        /// <param name="url">URL</param>
         [AutomaticRetry(Attempts = 0)]
         public void GetImagesByUrl(string url)
         {
@@ -22,10 +29,6 @@ namespace ImagesDownloader.Services
                 var imagesFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
                 var randomFileName = Path.GetRandomFileName();
                 var tempDirectory = Path.Combine(imagesFolder, randomFileName);
-
-                //var securityRules = new DirectorySecurity();
-                //securityRules.AddAccessRule(new FileSystemAccessRule(@"Domain\account1", FileSystemRights.Read, AccessControlType.Allow));
-                //securityRules.AddAccessRule(new FileSystemAccessRule(@"Domain\account2", FileSystemRights.FullControl, AccessControlType.Allow));
 
                 Directory.CreateDirectory(tempDirectory);
 
@@ -46,8 +49,6 @@ namespace ImagesDownloader.Services
 
                             if (!IsNullOrEmpty(src))
                             {
-                                // base64
-                                // svg
                                 if (src.StartsWith("http"))
                                 {
                                     var fileName = Guid.NewGuid() + Path.GetExtension(src);
@@ -55,13 +56,21 @@ namespace ImagesDownloader.Services
 
                                     client.DownloadFile(src, outputFile);
 
-                                    // TODO: Move to database layer
                                     var size = new FileInfo(outputFile).Length;
-                                    var image = Image.FromFile(outputFile);
+                                    int width;
+                                    int height;
+
+                                    using (var stream = new FileStream(outputFile, FileMode.Open, FileAccess.Read))
+                                    {
+                                        var image = Image.FromStream(stream);
+                                        width = image.Width;
+                                        height = image.Height;
+                                    }
+
+                                    
 
                                     using (var context = new JobsEntities())
                                     {
-                                        // TODO Add information
                                         var imageInfo = new ImageInfo
                                         {
                                             ContentType = MimeMapping.GetMimeMapping(fileName),
@@ -71,8 +80,8 @@ namespace ImagesDownloader.Services
                                             RemoteUrl = src,
                                             JobId = Convert.ToInt32(JobContext.JobId),
                                             Size = size,
-                                            Height = image.Height,
-                                            Width = image.Height
+                                            Height = width,
+                                            Width = height
                                         };
 
                                         context.ImageInfoes.Add(imageInfo);

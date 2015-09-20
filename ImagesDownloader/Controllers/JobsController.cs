@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Web.Http;
 using Hangfire;
+using ImagesDownloader.Exceptions;
 using ImagesDownloader.Models;
 using ImagesDownloader.Services;
 using Newtonsoft.Json;
@@ -33,11 +34,17 @@ namespace ImagesDownloader.Controllers
 
                 return Request.CreateResponse(HttpStatusCode.OK, jobInfo, JsonMediaTypeFormatter.DefaultMediaType);
             }
-            // TODO: Catch not found exception
+            catch (JobNotFoundException ex)
+            {
+                Trace.WriteLine(ex.Message);
+                return Request.CreateResponse(HttpStatusCode.NotFound, "Job with current identifier was not found",
+                    JsonMediaTypeFormatter.DefaultMediaType);
+            }
             catch (Exception ex)
             {
                 Trace.WriteLine(ex.Message);
-                return Request.CreateResponse(HttpStatusCode.NotFound, "Job with current identifier was not found", JsonMediaTypeFormatter.DefaultMediaType);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Ooops, something went wrong",
+                    JsonMediaTypeFormatter.DefaultMediaType);
             }
         }
 
@@ -52,7 +59,8 @@ namespace ImagesDownloader.Controllers
             {
                 UrlInfo urlInfo = JsonConvert.DeserializeObject<UrlInfo>(value.ToString());
                 Uri urlResult;
-                var isValidUrl = Uri.TryCreate(urlInfo.Value, UriKind.Absolute, out urlResult) && urlResult.Scheme == Uri.UriSchemeHttp;
+                var isValidUrl = Uri.TryCreate(urlInfo.Value, UriKind.Absolute, out urlResult) &&
+                                 urlResult.Scheme == Uri.UriSchemeHttp;
 
                 if (isValidUrl)
                 {
@@ -61,12 +69,14 @@ namespace ImagesDownloader.Controllers
                     return Request.CreateResponse(HttpStatusCode.OK, jobId, JsonMediaTypeFormatter.DefaultMediaType);
                 }
 
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Not correct request", JsonMediaTypeFormatter.DefaultMediaType);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Not correct request",
+                    JsonMediaTypeFormatter.DefaultMediaType);
             }
             catch (Exception ex)
             {
                 Trace.WriteLine(ex.Message);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Ooops, something went wrong", JsonMediaTypeFormatter.DefaultMediaType);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, "Ooops, something went wrong",
+                    JsonMediaTypeFormatter.DefaultMediaType);
             }
         }
     }

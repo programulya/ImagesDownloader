@@ -225,6 +225,7 @@
     <Compile Include="Contracts\IImagesService.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobsController.cs" />
+    <Compile Include="Exceptions\JobNotFoundException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -302,6 +303,7 @@
     <Content Include="Jobs.edmx.diagram">
       <DependentUpon>Jobs.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\images-downloader.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

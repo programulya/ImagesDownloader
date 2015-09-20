@@ -578,5 +578,28 @@
             All posible job statuses
             </summary>
         </member>
+        <member name="T:ImagesDownloader.Services.JobInfoService">
+            <summary>
+            Job information service
+            </summary>
+        </member>
+        <member name="M:ImagesDownloader.Services.JobInfoService.GetJobInfoById(System.Int32)">
+            <summary>
+            Get job information
+            </summary>
+            <param name="id">Job id</param>
+            <returns>Returns information</returns>
+        </member>
+        <member name="T:ImagesDownloader.Services.ImagesService">
+            <summary>
+            Download images service
+            </summary>
+        </member>
+        <member name="M:ImagesDownloader.Services.ImagesService.GetImagesByUrl(System.String)">
+            <summary>
+            Get images by URL
+            </summary>
+            <param name="url">URL</param>
+        </member>
     </members>
 </doc>
