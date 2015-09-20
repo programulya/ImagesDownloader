@@ -48,7 +48,7 @@ namespace ImagesDownloader.Services
                             {
                                 // base64
                                 // svg
-                                if (!src.StartsWith("data"))
+                                if (src.StartsWith("http"))
                                 {
                                     var fileName = Guid.NewGuid() + Path.GetExtension(src);
                                     var outputFile = Path.Combine(tempDirectory, fileName);

@@ -11,8 +11,7 @@
             url: "http://localhost/ImagesDownloader/api/jobs/" + jobId,
             type: "GET",
             dataType: "json",
-            contentType: "application/json",
-            timeout: 10000
+            contentType: "application/json"
         }).done(function(data) {
             var jobContainer = "#job" + jobId;
             $(jobContainer + " #jobStatus").text(data.status);
@@ -33,7 +32,6 @@
                 }
             }
 
-            console.log("poll");
             if (data.status !== "Succeeded" && data.status !== "Failed" && data.status !== "Deleted") {
                 setTimeout(function() {
                     poll(jobId);
@@ -58,8 +56,7 @@
                 url: "http://localhost/ImagesDownloader/api/jobs",
                 data: JSON.stringify({ value: url }),
                 dataType: "json",
-                contentType: "application/json",
-                timeout: 10000
+                contentType: "application/json"
             }).done(function(jobId) {
                 alert("Job was created. Job Id: " + jobId);
 
