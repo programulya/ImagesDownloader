@@ -67,8 +67,6 @@ namespace ImagesDownloader.Services
                                         height = image.Height;
                                     }
 
-                                    
-
                                     using (var context = new JobsEntities())
                                     {
                                         var imageInfo = new ImageInfo
