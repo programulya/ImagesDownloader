@@ -75,9 +75,10 @@ namespace ImagesDownloader.Services
             }
 
             var enqueuedJobDto =
-                api.EnqueuedJobs("default", int.MaxValue, int.MaxValue)
+                api.EnqueuedJobs("default", 0, 1000)
                     .FirstOrDefault(job => job.Key == id.ToString())
                     .Value;
+
             if (enqueuedJobDto != null)
             {
                 jobinfo.Status = JobStatus.Enqueued.ToString();

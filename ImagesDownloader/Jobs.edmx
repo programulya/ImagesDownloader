@@ -15,7 +15,7 @@
           <Property Name="RemoteUrl" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Width" Type="int" Nullable="false" />
           <Property Name="Height" Type="int" Nullable="false" />
-          <Property Name="Size" Type="int" Nullable="false" />
+          <Property Name="Size" Type="bigint" Nullable="false" />
           <Property Name="ContentType" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityContainer Name="JobsModelStoreContainer">
@@ -25,22 +25,22 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="JobsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="JobsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ImageInfoes" EntityType="JobsModel.ImageInfo" />
+        </EntityContainer>
         <EntityType Name="ImageInfo">
           <Key>
             <PropertyRef Name="ImageInfoId" />
           </Key>
-          <Property Name="ImageInfoId" Type="Int64" Nullable="false" />
+          <Property Name="ImageInfoId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="JobId" Type="Int32" Nullable="false" />
-          <Property Name="LocalUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RemoteUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LocalUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RemoteUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Width" Type="Int32" Nullable="false" />
           <Property Name="Height" Type="Int32" Nullable="false" />
-          <Property Name="Size" Type="Int32" Nullable="false" />
-          <Property Name="ContentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Size" Type="Int64" Nullable="false" />
+          <Property Name="ContentType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityContainer Name="JobsEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="ImageInfoes" EntityType="Self.ImageInfo" />
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -50,14 +50,14 @@
           <EntitySetMapping Name="ImageInfoes">
             <EntityTypeMapping TypeName="JobsModel.ImageInfo">
               <MappingFragment StoreEntitySet="ImageInfo">
-                <ScalarProperty Name="ImageInfoId" ColumnName="ImageInfoId" />
-                <ScalarProperty Name="JobId" ColumnName="JobId" />
-                <ScalarProperty Name="LocalUrl" ColumnName="LocalUrl" />
-                <ScalarProperty Name="RemoteUrl" ColumnName="RemoteUrl" />
-                <ScalarProperty Name="Width" ColumnName="Width" />
-                <ScalarProperty Name="Height" ColumnName="Height" />
-                <ScalarProperty Name="Size" ColumnName="Size" />
                 <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="RemoteUrl" ColumnName="RemoteUrl" />
+                <ScalarProperty Name="LocalUrl" ColumnName="LocalUrl" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="ImageInfoId" ColumnName="ImageInfoId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

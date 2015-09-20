@@ -13,13 +13,14 @@ namespace ImagesDownloader.Services
 {
     public class ImagesService : IImagesService
     {
-        [AutomaticRetry(Attempts = 2)]
+        [AutomaticRetry(Attempts = 0)]
         public void GetImagesByUrl(string url)
         {
             try
             {
-                //var imagesFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
-                var tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+                var imagesFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
+                var randomFileName = Path.GetRandomFileName();
+                var tempDirectory = Path.Combine(imagesFolder, randomFileName);
 
                 //var securityRules = new DirectorySecurity();
                 //securityRules.AddAccessRule(new FileSystemAccessRule(@"Domain\account1", FileSystemRights.Read, AccessControlType.Allow));
@@ -49,8 +50,11 @@ namespace ImagesDownloader.Services
                                 if (!src.StartsWith("data"))
                                 {
                                     var fileName = Guid.NewGuid() + Path.GetExtension(src);
+                                    var outputFile = Path.Combine(tempDirectory, fileName);
 
-                                    client.DownloadFile(src, Path.Combine(tempDirectory, fileName));
+                                    client.OpenRead(src);
+                                    var size = Convert.ToInt64(client.ResponseHeaders["Content-Length"]);
+                                    client.DownloadFile(src, outputFile);
 
                                     // TODO: Move to database layer
                                     using (var context = new JobsEntities())
@@ -59,9 +63,10 @@ namespace ImagesDownloader.Services
                                         var imageInfo = new ImageInfo
                                         {
                                             ContentType = MimeMapping.GetMimeMapping(fileName),
-                                            LocalUrl = Empty,
+                                            LocalUrl = "http://localhost/ImagesDownloader/Images/" + randomFileName + "/" + fileName,
                                             RemoteUrl = src,
-                                            JobId = Convert.ToInt32(JobContext.JobId)
+                                            JobId = Convert.ToInt32(JobContext.JobId),
+                                            Size = size
                                         };
 
                                         //imageInfo.Size = 0;
@@ -80,6 +85,8 @@ namespace ImagesDownloader.Services
             catch (Exception ex)
             {
                 Trace.WriteLine(ex.Message);
+
+                throw;
             }
         }
     }

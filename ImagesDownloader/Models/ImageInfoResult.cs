@@ -1,4 +1,6 @@
-﻿namespace ImagesDownloader.Models
+﻿using System;
+
+namespace ImagesDownloader.Models
 {
     /// <summary>
     /// Image information
@@ -28,7 +30,7 @@
         /// <summary>
         /// Size
         /// </summary>
-        public int Size { get; set; }
+        public long Size { get; set; }
 
         /// <summary>
         /// Content-type
