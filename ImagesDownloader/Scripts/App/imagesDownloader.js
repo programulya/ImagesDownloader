@@ -8,7 +8,7 @@
 
     function poll(jobId) {
         $.ajax({
-            url: "http://localhost/ImagesDownloader/api/jobs/" + jobId,
+            url: "/api/jobs/" + jobId,
             type: "GET",
             dataType: "json",
             contentType: "application/json"
@@ -53,7 +53,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "http://localhost/ImagesDownloader/api/jobs",
+                url: "/api/jobs",
                 data: JSON.stringify({ value: url }),
                 dataType: "json",
                 contentType: "application/json"

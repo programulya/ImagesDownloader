@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -73,7 +74,7 @@ namespace ImagesDownloader.Services
                                         {
                                             ContentType = MimeMapping.GetMimeMapping(fileName),
                                             LocalUrl =
-                                                "http://localhost/ImagesDownloader/Images/" + randomFileName + "/" +
+                                                ConfigurationManager.AppSettings["imagesUrl"] + randomFileName + "/" +
                                                 fileName,
                                             RemoteUrl = src,
                                             JobId = Convert.ToInt32(JobContext.JobId),
