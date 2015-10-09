@@ -42,6 +42,7 @@ namespace ImagesDownloader.Controllers
             catch (Exception ex)
             {
                 Trace.WriteLine(ex.Message);
+
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, "Ooops, something went wrong",
                     JsonMediaTypeFormatter.DefaultMediaType);
             }
@@ -74,6 +75,7 @@ namespace ImagesDownloader.Controllers
             catch (Exception ex)
             {
                 Trace.WriteLine(ex.Message);
+
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, "Ooops, something went wrong",
                     JsonMediaTypeFormatter.DefaultMediaType);
             }

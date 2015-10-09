@@ -14,14 +14,14 @@ using System.Drawing;
 namespace ImagesDownloader.Services
 {
     /// <summary>
-    /// Download images service
+    /// Download images service.
     /// </summary>
     public class ImagesService : IImagesService
     {
         /// <summary>
-        /// Get images by URL
+        /// Get images by URL.
         /// </summary>
-        /// <param name="url">URL</param>
+        /// <param name="url">URL.</param>
         [AutomaticRetry(Attempts = 0)]
         public void GetImagesByUrl(string url)
         {

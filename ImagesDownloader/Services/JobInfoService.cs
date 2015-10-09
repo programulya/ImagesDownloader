@@ -10,7 +10,7 @@ using ImagesDownloader.Models;
 namespace ImagesDownloader.Services
 {
     /// <summary>
-    /// Job information service
+    /// Job information service.
     /// </summary>
     public class JobInfoService : IJobInfoService
     {
