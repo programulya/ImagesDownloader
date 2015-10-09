@@ -483,26 +483,37 @@
         </member>
         <member name="T:ImagesDownloader.Contracts.IJobInfoService">
             <summary>
-            Job information service
+            Job information service.
             </summary>
         </member>
         <member name="M:ImagesDownloader.Contracts.IJobInfoService.GetJobInfoById(System.Int32)">
             <summary>
-            Get job information
+            Get job information.
             </summary>
-            <param name="id">Job Id</param>
-            <returns>Information about job</returns>
+            <param name="id">Job Id.</param>
+            <returns>Information about job.</returns>
         </member>
         <member name="T:ImagesDownloader.Contracts.IImagesService">
             <summary>
-            Download images service
+            Download images service.
             </summary>
         </member>
         <member name="M:ImagesDownloader.Contracts.IImagesService.GetImagesByUrl(System.String)">
             <summary>
-            Get images by URL
+            Get images by URL.
             </summary>
-            <param name="url">URL</param>
+            <param name="url">URL.</param>
+        </member>
+        <member name="T:ImagesDownloader.Controllers.HomeController">
+            <summary>
+            Home page controller.
+            </summary>
+        </member>
+        <member name="M:ImagesDownloader.Controllers.HomeController.Index">
+            <summary>
+            Default action for display home page.
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:ImagesDownloader.Controllers.JobsController">
             <summary>
@@ -523,59 +534,80 @@
             <param name="value">Page URL.</param>
             <returns>Returns job id in HttpResponseMessage.</returns>
         </member>
+        <member name="T:ImagesDownloader.Exceptions.JobNotFoundException">
+            <summary>
+            Exception if job was not found.
+            </summary>
+        </member>
+        <member name="M:ImagesDownloader.Exceptions.JobNotFoundException.#ctor(System.String)">
+            <summary>
+            Create exception if job was not found.
+            </summary>
+            <param name="message">Message.</param>
+        </member>
         <member name="T:ImagesDownloader.Models.ImageInfoResult">
             <summary>
-            Image information
+            Image information.
             </summary>
         </member>
         <member name="P:ImagesDownloader.Models.ImageInfoResult.LocalUrl">
             <summary>
-            Local URL
+            Local URL.
             </summary>
         </member>
         <member name="P:ImagesDownloader.Models.ImageInfoResult.RemoteUrl">
             <summary>
-            Remote URL
+            Remote URL.
             </summary>
         </member>
         <member name="P:ImagesDownloader.Models.ImageInfoResult.Width">
             <summary>
-            Width
+            Width.
             </summary>
         </member>
         <member name="P:ImagesDownloader.Models.ImageInfoResult.Height">
             <summary>
-            Height
+            Height.
             </summary>
         </member>
         <member name="P:ImagesDownloader.Models.ImageInfoResult.Size">
             <summary>
-            Size
+            Size.
             </summary>
         </member>
         <member name="P:ImagesDownloader.Models.ImageInfoResult.ContentType">
             <summary>
-            Content-type
+            Content-type.
             </summary>
         </member>
         <member name="T:ImagesDownloader.Models.JobInfoResult">
             <summary>
-            Job information
+            Job information.
             </summary>
         </member>
         <member name="P:ImagesDownloader.Models.JobInfoResult.Status">
             <summary>
-            Current status
+            Current status.
             </summary>
         </member>
         <member name="P:ImagesDownloader.Models.JobInfoResult.Result">
             <summary>
-            Downloaded images
+            Downloaded images.
             </summary>
         </member>
         <member name="T:ImagesDownloader.Models.JobStatus">
             <summary>
             All posible job statuses
+            </summary>
+        </member>
+        <member name="T:ImagesDownloader.Models.UrlInfo">
+            <summary>
+            URL information.
+            </summary>
+        </member>
+        <member name="P:ImagesDownloader.Models.UrlInfo.Value">
+            <summary>
+            URL address.
             </summary>
         </member>
         <member name="T:ImagesDownloader.Services.JobInfoService">
@@ -585,10 +617,10 @@
         </member>
         <member name="M:ImagesDownloader.Services.JobInfoService.GetJobInfoById(System.Int32)">
             <summary>
-            Get job information
+            Get job information.
             </summary>
-            <param name="id">Job id</param>
-            <returns>Returns information</returns>
+            <param name="id">Job id.</param>
+            <returns>Returns information.</returns>
         </member>
         <member name="T:ImagesDownloader.Services.ImagesService">
             <summary>

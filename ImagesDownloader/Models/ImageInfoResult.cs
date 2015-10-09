@@ -1,39 +1,37 @@
-﻿using System;
-
-namespace ImagesDownloader.Models
+﻿namespace ImagesDownloader.Models
 {
     /// <summary>
-    /// Image information
+    /// Image information.
     /// </summary>
     public class ImageInfoResult
     {
         /// <summary>
-        /// Local URL
+        /// Local URL.
         /// </summary>
         public string LocalUrl { get; set; }
 
         /// <summary>
-        /// Remote URL
+        /// Remote URL.
         /// </summary>
         public string RemoteUrl { get; set; }
 
         /// <summary>
-        /// Width
+        /// Width.
         /// </summary>
         public int Width { get; set; }
 
         /// <summary>
-        /// Height
+        /// Height.
         /// </summary>
         public int Height { get; set; }
 
         /// <summary>
-        /// Size
+        /// Size.
         /// </summary>
         public long Size { get; set; }
 
         /// <summary>
-        /// Content-type
+        /// Content-type.
         /// </summary>
         public string ContentType { get; set; }
     }

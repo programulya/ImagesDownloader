@@ -1,23 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace ImagesDownloader.Exceptions
 {
+    /// <summary>
+    /// Exception if job was not found.
+    /// </summary>
     public class JobNotFoundException : Exception
     {
-        public JobNotFoundException()
-        {
-        }
-
+        /// <summary>
+        /// Create exception if job was not found.
+        /// </summary>
+        /// <param name="message">Message.</param>
         public JobNotFoundException(string message)
             : base(message)
-        {
-        }
-
-        public JobNotFoundException(string message, Exception inner)
-            : base(message, inner)
         {
         }
     }

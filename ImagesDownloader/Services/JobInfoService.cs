@@ -15,36 +15,48 @@ namespace ImagesDownloader.Services
     public class JobInfoService : IJobInfoService
     {
         /// <summary>
-        /// Get job information
+        /// Get job information.
         /// </summary>
-        /// <param name="id">Job id</param>
-        /// <returns>Returns information</returns>
+        /// <param name="id">Job id.</param>
+        /// <returns>Returns information.</returns>
         public JobInfoResult GetJobInfoById(int id)
         {
             var api = JobStorage.Current.GetMonitoringApi();
             var jobInfo = GetJobInfoFromSucceededJobs(id, api);
             if (jobInfo != null)
+            {
                 return jobInfo;
+            }
 
             jobInfo = GetJobInfoFromPrecessingJobs(id, api);
             if (jobInfo != null)
+            {
                 return jobInfo;
+            }
 
             jobInfo = GetJobInfoFromFailedJobs(id, api);
             if (jobInfo != null)
+            {
                 return jobInfo;
+            }
 
             jobInfo = GetJobInfoFromScheduledJobs(id, api);
             if (jobInfo != null)
+            {
                 return jobInfo;
+            }
 
             jobInfo = GetJobInfoFromDeletedJobs(id, api);
             if (jobInfo != null)
+            {
                 return jobInfo;
+            }
 
             jobInfo = GetJobInfoFromEnqueuedJobs(id, api);
             if (jobInfo != null)
+            {
                 return jobInfo;
+            }
 
             throw new JobNotFoundException("Job was not found");
         }
@@ -90,6 +102,7 @@ namespace ImagesDownloader.Services
             var jobinfo = new JobInfoResult {Result = new List<ImageInfoResult>()};
             var processingJobDto =
                 api.ProcessingJobs(0, int.MaxValue).FirstOrDefault(job => job.Key == id.ToString()).Value;
+
             if (processingJobDto != null)
             {
                 jobinfo.Status = JobStatus.Processing.ToString();
@@ -104,6 +117,7 @@ namespace ImagesDownloader.Services
         {
             var jobinfo = new JobInfoResult {Result = new List<ImageInfoResult>()};
             var failedJobDto = api.FailedJobs(0, int.MaxValue).FirstOrDefault(job => job.Key == id.ToString()).Value;
+
             if (failedJobDto != null)
             {
                 jobinfo.Status = JobStatus.Failed.ToString();
@@ -137,6 +151,7 @@ namespace ImagesDownloader.Services
             var jobinfo = new JobInfoResult {Result = new List<ImageInfoResult>()};
             var scheduledJobDto =
                 api.ScheduledJobs(0, int.MaxValue).FirstOrDefault(job => job.Key == id.ToString()).Value;
+
             if (scheduledJobDto != null)
             {
                 jobinfo.Status = JobStatus.Scheduled.ToString();
